@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngày Yêu Nhau</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .love-hero { min-height: 100vh; display: flex; align-items: center; padding-top: 80px; position: relative; }
+        .love-counter { display: grid; gap: 1.5rem; }
+        .counter-grid { display: grid; grid-template-columns: repeat(3, minmax(120px, 1fr)); gap: 1rem; }
+        .counter-box { background: rgba(255,255,255,0.15); border: none; padding: 1.25rem; border-radius: 12px; text-align: center; }
+        .counter-number { font-size: 2.5rem; font-weight: 700; }
+        .person-card { display:flex; align-items:center; justify-content:center; gap:12px; background: rgba(255,255,255,0.15); border: none; padding:10px 14px; border-radius: 999px; width: fit-content; }
+        .person-avatar { width:40px; height:40px; border-radius:50%; object-fit:cover; }
+        .love-actions { display:flex; gap:.5rem; flex-wrap: wrap; }
+        .subtle { opacity:.9 }
+        .white-card { background:#fff; border:1px solid #e2e8f0; padding:12px; border-radius:12px; display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
+        .links { display:flex; gap:.5rem; flex-wrap:wrap; }
+        .scroll-indicator { position:absolute; bottom:24px; left:50%; transform:translateX(-50%); color:#fff; text-decoration:none; display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background: rgba(255,255,255,0.12); border:none; font-size: 0.9rem; }
+        .scroll-indicator .arrow { width:10px; height:10px; border-right:2px solid #fff; border-bottom:2px solid #fff; transform: rotate(45deg); animation: arrow-bounce 1.2s infinite; }
+        @keyframes arrow-bounce { 0%,100%{ transform: translateY(0) rotate(45deg);} 50%{ transform: translateY(4px) rotate(45deg);} }
+        .heart-section { min-height: 100vh; position: relative; background: #000; }
+        .heart-canvas { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
+        .scroll-indicator .arrow.up { transform: rotate(-135deg); animation: arrow-up 1.2s infinite; }
+        @keyframes arrow-up { 0%,100%{ transform: translateY(0) rotate(-135deg);} 50%{ transform: translateY(-4px) rotate(-135deg);} }
+        .footer { background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%) !important; color: #fff; padding: 60px 0; text-align: center; position: relative; }
+        .footer .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .footer h2 { font-size: 2rem; font-weight: 600; margin: 0; }
+        @media (max-width: 480px){ .counter-grid{ grid-template-columns: 1fr 1fr; } }
+    </style>
+    <script>
+        document.documentElement.setAttribute('data-page', 'love');
+    </script>
+    
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Our Love</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Ngày yêu</a></li>
+                <li class="nav-item"><a href="me.html" class="nav-link">Profile Anh</a></li>
+                <li class="nav-item"><a href="lover.html" class="nav-link">Profile Em</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <section id="top" class="hero love-hero" style="background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); color:#fff">
+        <canvas id="pinkboard" class="heart-canvas"></canvas>
+        <div class="hero-container">
+            <div class="hero-text" style="text-align:center; padding-right:0;">
+                <h1 class="hero-title">Chúng mình đã bên nhau</h1>
+                    <div class="love-counter">
+                        <div class="counter-grid">
+                            <div class="counter-box">
+                                <div id="love-days" class="counter-number">0</div>
+                                <div>Ngày</div>
+                    </div>
+                            <div class="counter-box">
+                                <div id="love-hours" class="counter-number">0</div>
+                                <div>Giờ</div>
+                </div>
+                            <div class="counter-box">
+                                <div id="love-minutes" class="counter-number">0</div>
+                                <div>Phút</div>
+        </div>
+                        </div>
+                        
+                        <div class="love-actions" style="justify-content:center;">
+                            <div class="person-card">
+                                <a href="me.html" style="color:#fff; text-decoration:none;">Profile Anh</a>
+                            </div>
+                            <div class="person-card">
+                                <a href="lover.html" style="color:#fff; text-decoration:none;">Profile Em</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer"> 
+        <div class="container">
+            <h4>Forever us ♥</h4>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+    (function startHeartBackground(){
+        const canvas = document.getElementById('pinkboard');
+        if (!canvas) return;
+        function startHeart(canvas){
+            var settings = { particles: { length: 500, duration: 2, velocity: 100, effect: -0.75, size: 30 } };
+            (function(){var b=0;var c=["ms","moz","webkit","o"];for(var a=0;a<c.length&&!window.requestAnimationFrame;++a){window.requestAnimationFrame=window[c[a]+"RequestAnimationFrame"];window.cancelAnimationFrame=window[c[a]+"CancelAnimationFrame"]||window[c[a]+"CancelRequestAnimationFrame"]}if(!window.requestAnimationFrame){window.requestAnimationFrame=function(h,e){var d=new Date().getTime();var f=Math.max(0,16-(d-b));var g=window.setTimeout(function(){h(d+f)},f);b=d+f;return g}}if(!window.cancelAnimationFrame){window.cancelAnimationFrame=function(d){clearTimeout(d)}}}());
+            var Point=(function(){function Point(x,y){this.x=(typeof x!=="undefined")?x:0;this.y=(typeof y!=="undefined")?y:0}Point.prototype.clone=function(){return new Point(this.x,this.y)};Point.prototype.length=function(length){if(typeof length=="undefined")return Math.sqrt(this.x*this.x+this.y*this.y);this.normalize();this.x*=length;this.y*=length;return this};Point.prototype.normalize=function(){var length=this.length();this.x/=length;this.y/=length;return this};return Point})();
+            var Particle=(function(){function Particle(){this.position=new Point();this.velocity=new Point();this.acceleration=new Point();this.age=0}Particle.prototype.initialize=function(x,y,dx,dy){this.position.x=x;this.position.y=y;this.velocity.x=dx;this.velocity.y=dy;this.acceleration.x=dx*settings.particles.effect;this.acceleration.y=dy*settings.particles.effect;this.age=0};Particle.prototype.update=function(deltaTime){this.position.x+=this.velocity.x*deltaTime;this.position.y+=this.velocity.y*deltaTime;this.velocity.x+=this.acceleration.x*deltaTime;this.velocity.y+=this.acceleration.y*deltaTime;this.age+=deltaTime};Particle.prototype.draw=function(context,image){function ease(t){return(--t)*t*t+1}var size=image.width*ease(this.age/settings.particles.duration);context.globalAlpha=1-this.age/settings.particles.duration;context.drawImage(image,this.position.x-size/2,this.position.y-size/2,size,size)};return Particle})();
+            var ParticlePool=(function(){var particles,firstActive=0,firstFree=0,duration=settings.particles.duration;function ParticlePool(length){particles=new Array(length);for(var i=0;i<particles.length;i++)particles[i]=new Particle()}ParticlePool.prototype.add=function(x,y,dx,dy){particles[firstFree].initialize(x,y,dx,dy);firstFree++;if(firstFree==particles.length)firstFree=0;if(firstActive==firstFree)firstActive++;if(firstActive==particles.length)firstActive=0};ParticlePool.prototype.update=function(deltaTime){var i;if(firstActive<firstFree){for(i=firstActive;i<firstFree;i++)particles[i].update(deltaTime)}if(firstFree<firstActive){for(i=firstActive;i<particles.length;i++)particles[i].update(deltaTime);for(i=0;i<firstFree;i++)particles[i].update(deltaTime)}while(particles[firstActive].age>=duration&&firstActive!=firstFree){firstActive++;if(firstActive==particles.length)firstActive=0}};ParticlePool.prototype.draw=function(context,image){if(firstActive<firstFree){for(i=firstActive;i<firstFree;i++)particles[i].draw(context,image)}if(firstFree<firstActive){for(i=firstActive;i<particles.length;i++)particles[i].draw(context,image);for(i=0;i<firstFree;i++)particles[i].draw(context,image)}};return ParticlePool})();
+            (function(canvas){
+                var context=canvas.getContext('2d'),particles=new ParticlePool(settings.particles.length),particleRate=settings.particles.length/settings.particles.duration,time,animationId;
+                function pointOnHeart(t){return new Point(160*Math.pow(Math.sin(t),3),130*Math.cos(t)-50*Math.cos(2*t)-20*Math.cos(3*t)-10*Math.cos(4*t)+25)}
+                var image=(function(){var c=document.createElement('canvas'),ctx=c.getContext('2d');c.width=settings.particles.size;c.height=settings.particles.size;function to(t){var point=pointOnHeart(t);point.x=settings.particles.size/2+point.x*settings.particles.size/350;point.y=settings.particles.size/2-point.y*settings.particles.size/350;return point}ctx.beginPath();var t=-Math.PI;var p=to(t);ctx.moveTo(p.x,p.y);while(t<Math.PI){t+=0.01;p=to(t);ctx.lineTo(p.x,p.y)}ctx.closePath();ctx.fillStyle='#ea80b0';ctx.fill();var img=new Image();img.src=c.toDataURL();return img})();
+                function render(){animationId=requestAnimationFrame(render);var newTime=new Date().getTime()/1000,deltaTime=newTime-(time||newTime);time=newTime;context.clearRect(0,0,canvas.width,canvas.height);var amount=particleRate*deltaTime;for(var i=0;i<amount;i++){var pos=pointOnHeart(Math.PI-2*Math.PI*Math.random());var dir=pos.clone().length(settings.particles.velocity);particles.add(canvas.width/2+pos.x,canvas.height/2-pos.y,dir.x,-dir.y)}particles.update(deltaTime);particles.draw(context,image)}
+                function onResize(){canvas.width=canvas.clientWidth;canvas.height=canvas.clientHeight}
+                window.addEventListener('resize', onResize);
+                setTimeout(function(){onResize();render()},10);
+            })(canvas);
+        }
+        startHeart(canvas);
+    })();
+    </script>
+</body>
+</html>
+
+
